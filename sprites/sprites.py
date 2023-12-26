@@ -3,6 +3,7 @@ import random
 import pygame.key
 from pygame.sprite import Sprite
 from pygame import Surface, image, transform
+import utils
 
 class Player(Sprite):
     def __init__(self):

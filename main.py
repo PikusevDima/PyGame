@@ -1,5 +1,5 @@
 import random
-
+from sprites.mob import Mob
 import pygame
 import utils
 from sprites.car import Car
@@ -17,6 +17,9 @@ font = pygame.font.SysFont(pygame.font.get_default_font(), 20)
 screen = pygame.display.set_mode(
     (config['width'], config['height'])
 )
+mobs = pygame.sprite.Group()
+
+
 
 car = Car()
 car_group = pygame.sprite.Group()
@@ -39,9 +42,13 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     car_group.update()
-    time -= 0.5
+    time -= 1
 
     screen.fill(config['colors']['black'])
+    pygame.draw.line(screen, (249, 252, 63),
+                     (210, 900),
+                     (210, 0),
+                     6)
     car_group.draw(screen)
 
     time_rendered = font.render(f"Time: {time / config['framerate']}", True, (255, 255, 255))

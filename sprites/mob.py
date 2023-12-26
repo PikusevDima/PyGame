@@ -7,12 +7,12 @@ config = file_utils.read_config_json()
 display_mask = pygame.mask.from_surface(pygame.Surface((config["width"], config["height"])))
 
 
-class Car(pygame.sprite.Sprite):
+class Mob(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
 
         self.images = [
-            pygame.image.load("./assets/Player.png"),
+            pygame.image.load("./assets/Mob1.png"),
         ]
         self.images = list(map(
             lambda x: pygame.transform.scale(
