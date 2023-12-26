@@ -1,6 +1,7 @@
 import pygame
 import file_utils
 import math
+from sprites.car import Car
 
 config = file_utils.read_config_json()
 # display_rect = pygame.Rect(0, 0, config["width"], config["height"])
@@ -39,7 +40,7 @@ class Mob(pygame.sprite.Sprite):
 
         # управление по Y
         if key[pygame.K_w]:
-            self.accelerate(1)
+            self.speed = abs(Car.mob_speed() - self.speed)
         if key[pygame.K_s]:
             self.accelerate(-1)
         if key[pygame.K_SPACE]:

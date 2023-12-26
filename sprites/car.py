@@ -44,11 +44,12 @@ class Car(pygame.sprite.Sprite):
             self.accelerate(-1)
         if key[pygame.K_SPACE]:
             self.brake(1.05)
-        # управление по X
+
         if key[pygame.K_a]:
-            self.turn(1.8)
+
+            self.rect.x -= self.speed
         if key[pygame.K_d]:
-            self.turn(-1.8)
+            self.rect.x += self.speed
 
         self.velocity.from_polar(
             (self.speed,
@@ -57,14 +58,6 @@ class Car(pygame.sprite.Sprite):
         virual_rect = self.image.get_rect()
         virual_rect.center = self.position + self.velocity
         in_bounds = display_mask.overlap_area(self.mask, virual_rect.topleft)
-
-        if in_bounds == self.mask.count():
-            self.position += self.velocity
-            new_coord = (round(self.position[0]), round(self.position[1]))
-            self.rect.center = new_coord
-        else:
-            self.velocity.update(0, 0)
-            self.speed = 0
 
     def turn(self, angle):
         if self.speed == 0:
@@ -109,3 +102,7 @@ class Car(pygame.sprite.Sprite):
         car.velocity.update(json["speed"])
         car.turn(json["angle"])
         return car
+
+    def mob_speed(self):
+        speed = self.speed
+        return speed

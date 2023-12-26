@@ -17,8 +17,9 @@ font = pygame.font.SysFont(pygame.font.get_default_font(), 20)
 screen = pygame.display.set_mode(
     (config['width'], config['height'])
 )
-mobs = pygame.sprite.Group()
-
+mob = Mob()
+mob_group = pygame.sprite.Group()
+mob_group.add(mob)
 
 
 car = Car()
@@ -31,7 +32,7 @@ car_group.add(car)
 clock = pygame.time.Clock()
 running = True
 
-time = 8 * config['framerate']
+time = 1 * config['framerate']
 score = 0
 
 while running:
@@ -42,7 +43,8 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     car_group.update()
-    time -= 1
+    mob_group.update()
+    time += 1
 
     screen.fill(config['colors']['black'])
     pygame.draw.line(screen, (249, 252, 63),
