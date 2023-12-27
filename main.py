@@ -1,3 +1,4 @@
+
 import random
 from sprites.mob import Mob
 import pygame
@@ -6,7 +7,6 @@ from sprites.car import Car
 import file_utils
 
 config = file_utils.read_config_json()
-# save = file_utils.read_json()
 
 pygame.init()
 pygame.mixer.init()
@@ -25,9 +25,6 @@ mob_group.add(mob)
 car = Car()
 car_group = pygame.sprite.Group()
 car_group.add(car)
-# for data in save:
-#     car = Car.parse_json(data)
-#     car_group.add(car)
 
 clock = pygame.time.Clock()
 running = True
@@ -52,6 +49,7 @@ while running:
                      (210, 0),
                      6)
     car_group.draw(screen)
+    mob_group.draw(screen)
 
     time_rendered = font.render(f"Time: {time / config['framerate']}", True, (255, 255, 255))
     screen.blit(time_rendered, (10, 10))

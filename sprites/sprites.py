@@ -49,7 +49,6 @@ class Mob(Sprite):
         self.rect.x += self.speed_x
         if self.rect.x > config.WIDTH - self.rect.width or self.rect.x < 0:
             self.rect.x -= self.speed_x
-            # self.speed_x *= 0.95
 
         self.rect.y += self.speed_y
         if self.rect.y > config.HEIGHT - self.rect.height or self.rect.y < 0:
@@ -63,7 +62,6 @@ class Mob(Sprite):
         vector_down = utils.get_lenght(x_p, y_p, x_m, y_m + self.speed_y)
         vector_right = utils.get_lenght(x_p, y_p, x_m + self.speed_x, y_m)
         vector_left = utils.get_lenght(x_p, y_p, x_m - self.speed_x, y_m)
-
         min_vector = min(vector_up, vector_down, vector_left, vector_right)
         if vector_up == min_vector:
             self.rect.y += -self.speed_y

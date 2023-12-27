@@ -40,7 +40,7 @@ class Mob(pygame.sprite.Sprite):
 
         # управление по Y
         if key[pygame.K_w]:
-            self.speed = abs(Car.mob_speed() - self.speed)
+            self.accelerate(1)
         if key[pygame.K_s]:
             self.accelerate(-1)
         if key[pygame.K_SPACE]:
@@ -110,3 +110,6 @@ class Mob(pygame.sprite.Sprite):
         car.velocity.update(json["speed"])
         car.turn(json["angle"])
         return car
+
+
+#group_collide

@@ -47,9 +47,9 @@ class Car(pygame.sprite.Sprite):
 
         if key[pygame.K_a]:
 
-            self.rect.x -= self.speed
-        if key[pygame.K_d]:
             self.rect.x += self.speed
+        if key[pygame.K_d]:
+            self.rect.x -= self.speed
 
         self.velocity.from_polar(
             (self.speed,
