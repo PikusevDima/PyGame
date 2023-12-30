@@ -9,7 +9,7 @@ config = file_utils.read_config_json()
 display_mask = pygame.mask.from_surface(pygame.Surface((config["width"], config["height"])))
 
 random_image = random.randint(1, 3)
-class Mob(pygame.sprite.Sprite):
+class Mob1(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
 
@@ -32,7 +32,7 @@ class Mob(pygame.sprite.Sprite):
             random.randint(0, 10)
         )
 
-        self.speed_y = random.randint(10, 30)
+        self.speed_y = random.randint(10, 10)
         self.speed_x = 0
 
     def update(self, *args, **kwargs):
