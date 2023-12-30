@@ -11,7 +11,7 @@ class Player(Sprite):
         self.index = 0
 
         self.images = [
-            image.load("Mob1/.png"),
+            image.load("assets/.png"),
             image.load("assets/.png")
         ]
         self.images = list(map(
@@ -23,7 +23,7 @@ class Player(Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (config.WIDTH / 2, config.HEIGHT / 2)
 
-        self.health = 1
+        self.health = 5
         self.points = 0
         self.resist = 5
 
@@ -42,7 +42,7 @@ class Mob(Sprite):
             random.randint(self.rect.height // 2, config.HEIGHT - self.rect.height // 2)
         )
 
-        self.speed_x = 0
+        self.speed_x = 5
         self.speed_y = 5
 
     def update(self):
@@ -54,6 +54,25 @@ class Mob(Sprite):
         self.rect.y += self.speed_y
         if self.rect.y > config.HEIGHT - self.rect.height or self.rect.y < 0:
             self.rect.y -= self.speed_y
+
+    def compute_move(self, player: Player):
+        x_m, y_m = self.rect.center
+        x_p, y_p = player.rect.center
+
+        vector_up = utils.get_lenght(x_p, y_p, x_m, y_m - self.speed_y)
+        vector_down = utils.get_lenght(x_p, y_p, x_m, y_m + self.speed_y)
+        vector_right = utils.get_lenght(x_p, y_p, x_m + self.speed_x, y_m)
+        vector_left = utils.get_lenght(x_p, y_p, x_m - self.speed_x, y_m)
+
+        min_vector = min(vector_up, vector_down, vector_left, vector_right)
+        if vector_up == min_vector:
+            self.rect.y += -self.speed_y
+        if vector_down == min_vector:
+            self.rect.y += self.speed_y
+        if vector_left == min_vector:
+            self.rect.x += -self.speed_x
+        if vector_right == min_vector:
+            self.rect.x += self.speed_x
 
     def reverse_speed_x(self):
         self.speed_x = -self.speed_x
