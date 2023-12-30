@@ -18,7 +18,7 @@ class Mob1(pygame.sprite.Sprite):
         ]
         self.images = list(map(
             lambda x: pygame.transform.scale(
-                pygame.transform.rotate(x, 180),
+                pygame.transform.rotate(x, 0),
                 (140, 280)
             ),
             self.images
@@ -28,24 +28,20 @@ class Mob1(pygame.sprite.Sprite):
         self.mask: pygame.mask.Mask = pygame.mask.from_surface(self.image)
 
         self.rect.center = (
-            random.randint(0, config["width"] - 230),
-            random.randint(0, 10)
+            random.randint(230, config["width"] - 20),
+            800
         )
 
-        self.speed_y = random.randint(10, 10)
-        self.speed_x = 0
+        self.speed_y = random.randint(10, 15)
 
     def update(self, *args, **kwargs):
-        if self.rect.y + self.rect.height < config["height"]:
-            self.rect.y += self.speed_y
+        if self.rect.y + self.rect.height > config["height"]:
+            self.rect.y -= self.speed_y
         else:
             self.kill()
 
-        if self.speed_y > 5:
-            self.speed_y -= 0.1
         key = pygame.key.get_pressed()
 
-        # управление по Y
         if key[pygame.K_w]:
             self.accelerate(1)
         if key[pygame.K_s]:

@@ -4,6 +4,7 @@ import pygame
 import utils
 from sprites.car import Car
 import file_utils
+from sprites.mob2 import Mob1
 
 config = file_utils.read_config_json()
 # save = file_utils.read_json()
@@ -27,15 +28,16 @@ mob = Mob()
 mob_group = pygame.sprite.Group()
 mob_group.add(mob)
 
+mob1 = Mob1()
 mob_group1 = pygame.sprite.Group()
-mob_group1.add(mob)
+mob_group1.add(mob1)
 
-
-n_mobs1 = 0
-for i in range(n_mobs1):
-    mob_group1.add(Mob())
 
 n_mobs = 1
+for i in range(n_mobs):
+    mob_group1.add(Mob())
+
+n_mobs1 = 1
 for i in range(n_mobs):
     mob_group.add(Mob())
 
@@ -51,13 +53,21 @@ while running:
             running = False
     player.update()
     mob_group.update()
+    mob_group1.update()
 
     score += 1
 
     if len(mob_group) < n_mobs:
         mob_group.add(Mob())
 
+    if len(mob_group1) < n_mobs1:
+        mob_group.add(Mob1())
+
     hits = pygame.sprite.groupcollide(player, mob_group, False, True)
+    if hits:
+        car.health -= 1
+
+    hits = pygame.sprite.groupcollide(player, mob_group1, False, True)
     if hits:
         car.health -= 1
 

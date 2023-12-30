@@ -25,62 +25,24 @@ class Car(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.mask: pygame.mask.Mask = pygame.mask.from_surface(self.image)
 
-        self.rect.center = (config['width'] // 2, config['height'] // 2)
+        self.rect.center = (config['width'] - 100, config['height'] // 2)
 
-        self.speed = 0
-        self.heading = -math.pi / 2
-        self.velocity = pygame.math.Vector2(0, 0)
-        self.position = pygame.math.Vector2(*self.rect.topleft)
+        self.speed_x = 10
+        self.health = 1
+
 
     def update(self, *args, **kwargs):
         key = pygame.key.get_pressed()
-        if abs(self.speed) > 0:
-            self.speed -= 0.2 * (abs(self.speed) // self.speed)
-
-        # управление по Y
-        if key[pygame.K_w]:
-            self.accelerate(1)
-        if key[pygame.K_s]:
-            self.accelerate(-1)
-        if key[pygame.K_SPACE]:
-            self.brake(1.05)
 
         if key[pygame.K_a]:
-
-            self.rect.x += self.speed
+            self.rect.x -= self.speed_x
         if key[pygame.K_d]:
-            self.rect.x -= self.speed
+            self.rect.x += self.speed_x
 
-        self.velocity.from_polar(
-            (self.speed,
-             math.degrees(math.pi - self.heading))
-        )
-        virual_rect = self.image.get_rect()
-        virual_rect.center = self.position + self.velocity
-        in_bounds = display_mask.overlap_area(self.mask, virual_rect.topleft)
-
-    def turn(self, angle):
-        if self.speed == 0:
-            return
-        self.heading += math.radians(angle)
-        x, y = self.rect.center
-        self.image = pygame.transform.rotozoom(
-            self.images[0],
-            math.degrees(self.heading + math.pi / 2),
-            1)
-        self.mask = pygame.mask.from_surface(self.image)
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
-
-    def brake(self, value):
-        if self.speed == 0:
-            return
-        self.speed /= value
-        if abs(self.speed) < 0.1:
-            self.speed = 0
-
-    def accelerate(self, value):
-        self.speed += value
+        if self.rect.x < 0:
+            self.rect.x = 0
+        if self.rect.x > config['width'] - self.rect.width:
+            self.rect.x = config['width'] - self.rect.width
 
     @property
     def hitbox(self):
@@ -94,15 +56,3 @@ class Car(pygame.sprite.Sprite):
             "postions": self.rect.center,
             "speed": 0
         }
-
-    @staticmethod
-    def parse_json(json: dict):
-        car = Car()
-        car.rect.center = json["postions"]
-        car.velocity.update(json["speed"])
-        car.turn(json["angle"])
-        return car
-
-    def mob_speed(self):
-        speed = self.speed
-        return speed
